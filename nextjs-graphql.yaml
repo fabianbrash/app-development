@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-graphql-2
+  namespace: dev-apps
+spec:
+  selector:
+    app: nextjs-graphql
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nextjs-graphql
+  name: nextjs-graphql
+  namespace: dev-apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nextjs-graphql
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nextjs-graphql
+    spec:
+      containers:
+      - image: fabianbrash/nextjs-graphql:0.9.4
+        name: nextjs-graphql
+        resources: {}
+status: {}
